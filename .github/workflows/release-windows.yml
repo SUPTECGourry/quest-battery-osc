@@ -25,7 +25,7 @@ jobs:
         pip install pyinstaller
 
     - name: Build single-file Windows 11 exe
-      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml; ." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --icon NONE --console main.py
+      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml;." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --icon NONE --console main.py
       shell: cmd
 
     - name: Verify binary
