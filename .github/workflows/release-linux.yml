@@ -25,14 +25,14 @@ jobs:
         pip install pyinstaller
 
     - name: Build single-file Linux executable
-      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml:." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --strip main.py
+      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml:." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --collect-all zeroconf --collect-all aiohttp --strip main.py
 
     - name: Verify binary
       run: |
         ls -l dist/
         file dist/quest-battery-osc
         chmod +x dist/quest-battery-osc
-        ./dist/quest-battery-osc --version || echo "Binary version check failed (but build succeeded)"
+        ./dist/quest-battery-osc --version || true
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
