@@ -25,13 +25,13 @@ jobs:
         pip install pyinstaller
 
     - name: Build single-file Windows 11 exe
-      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml;." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --icon NONE --console main.py
+      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml;." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --collect-all zeroconf --collect-all aiohttp --icon NONE --console main.py
       shell: cmd
 
     - name: Verify binary
       run: |
         dir dist
-        dist\quest-battery-osc.exe --version || echo "Binary version check failed (but build succeeded)"
+        dist\quest-battery-osc.exe --version || true
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
