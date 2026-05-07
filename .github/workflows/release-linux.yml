@@ -25,18 +25,7 @@ jobs:
         pip install pyinstaller
 
     - name: Build single-file Linux executable
-      run: |
-        pyinstaller \
-          --onefile \
-          --name quest-battery-osc \
-          --add-data "config.yaml:." \
-          --hidden-import websockets \
-          --hidden-import aiohttp \
-          --hidden-import zeroconf \
-          --hidden-import yaml \
-          --hidden-import pythonosc \
-          --strip \
-          main.py
+      run: pyinstaller --onefile --name quest-battery-osc --add-data "config.yaml:." --hidden-import websockets --hidden-import aiohttp --hidden-import zeroconf --hidden-import yaml --hidden-import pythonosc --strip main.py
 
     - name: Verify binary
       run: |
