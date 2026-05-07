@@ -2,6 +2,7 @@ name: Release Linux Binary
 
 on:
   push:
+    branches: [ main ]
     tags:
       - 'v*.*.*'
   workflow_dispatch:
@@ -41,7 +42,7 @@ jobs:
         path: dist/quest-battery-osc
         retention-days: 30
 
-    - name: Create GitHub Release (on tag)
+    - name: Create GitHub Release (on tag only)
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
