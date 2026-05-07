@@ -1,0 +1,57 @@
+name: Release Linux Binary
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install runtime + build deps
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build single-file Linux executable
+      run: |
+        pyinstaller \
+          --onefile \
+          --name quest-battery-osc \
+          --add-data "config.yaml:." \
+          --strip \
+          main.py
+
+    - name: Verify binary
+      run: |
+        ls -l dist/
+        file dist/quest-battery-osc
+        chmod +x dist/quest-battery-osc
+        ./dist/quest-battery-osc --help || echo "No --help yet (expected until main.py implemented)"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: quest-battery-osc-linux
+        path: dist/quest-battery-osc
+        retention-days: 30
+
+    - name: Create GitHub Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: dist/quest-battery-osc
+        draft: true
+        generate_release_notes: true
+        prerelease: false
