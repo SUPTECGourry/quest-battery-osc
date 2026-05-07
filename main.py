@@ -7,6 +7,7 @@ from __future__ import annotations
  from pathlib import Path
 
  import yaml
+ import argparse
 
  from vd_client import VDClient
  from osc_sender import OSCSender
@@ -20,6 +21,16 @@ from __future__ import annotations
  logger = logging.getLogger("main")
 
  CONFIG_PATH = Path(__file__).parent / "config.yaml"
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        prog="quest-battery-osc",
+        description="Quest Pro Battery Monitor — Virtual Desktop + OSCQuery + VRChat"
+    )
+    parser.add_argument("--version", action="version", version="%(prog)s 0.1.0-proto")
+    # Add more flags later (e.g. --config, --no-overlay)
+    return parser.parse_args()
 
  class BatteryState:
      def __init__(self, low_threshold: float):
@@ -120,6 +131,7 @@ from __future__ import annotations
      logger.info("Shutdown complete")
 
  if __name__ == "__main__":
+     parse_args()  # handles --help / --version (exits on those)
      try:
          asyncio.run(main())
      except KeyboardInterrupt:
