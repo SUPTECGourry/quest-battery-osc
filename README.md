@@ -1,5 +1,7 @@
 # Quest Pro Battery Monitor - Prototype
 
+> **Auto-trigger test commit** — pushed to verify `branches: [main]` workflow activation
+
 Lightweight PC bridge: Virtual Desktop → OSC/OSCQuery → VRChat avatar parameters.
 
 ## Setup
