@@ -1,0 +1,13 @@
+vd_ws_url: "ws://localhost:19999"
+vd_reconnect_backoff_s: [1, 2, 4, 8, 16]
+
+osc_target_ip: "127.0.0.1"
+osc_target_port: 9000
+
+oscquery_http_port: 9001
+oscquery_service_name: "QuestBatteryMonitor"
+
+poll_interval_s: 3
+low_battery_threshold: 0.15
+
+overlay_enabled: false
